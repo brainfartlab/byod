@@ -35,4 +35,4 @@
     - role: brainfartlab.overlord.synology
       vars:
         synology_ip: "{{ synology_ip }}"
-        synology_user: brainfartlab
+        synology_user: "{{ synology_user }}"
