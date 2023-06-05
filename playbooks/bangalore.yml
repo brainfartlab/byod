@@ -1,0 +1,37 @@
+---
+- name: byod
+  hosts: localhost
+  connection: local
+
+  vars_files:
+    - ../vars/gpg.yml
+    - ../vars/synology.yml
+
+  vars_prompt:
+    - name: gpg_passphrase
+      prompt: Type your GPG passphrase
+    - name: synology_user
+      prompt: Choose Synology user
+
+  roles:
+    - role: brainfartlab.overlord.credentials
+      vars:
+        authorizations:
+          pass: true
+          github: true
+          gpg: true
+        repo: "fd"
+        gpg_email: "{{ gpg_email }}"
+        gpg_public_key: "{{ gpg_public_key }}"
+        gpg_signing_key: "{{ gpg_signing_key }}"
+        gpg_ownertrust: "{{ gpg_ownertrust }}"
+        gpg_passphrase: "{{ gpg_passphrase }}"
+    - role: brainfartlab.overlord.terminal
+    - role: brainfartlab.overlord.python
+    - role: brainfartlab.overlord.node
+    - role: brainfartlab.overlord.golang
+    - role: brainfartlab.overlord.rust
+    - role: brainfartlab.overlord.synology
+      vars:
+        synology_ip: "{{ synology_ip }}"
+        synology_user: brainfartlab

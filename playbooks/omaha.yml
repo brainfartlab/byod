@@ -1,0 +1,23 @@
+---
+- name: omaha
+  hosts: localhost
+  connection: local
+  become: yes
+
+  roles:
+    - role: brainfartlab.overlord.base
+
+  tasks:
+    - name: create user
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        group: "{{ item.groups | default(omit) }}"
+        password: "{{ lookup('community.general.passwordstore', 'Accounts/'~item.name ) }}"
+        state: present
+        shell: /bin/zsh
+      loop:
+        - name: brainfartlab
+          groups: wheel
+        - name: cloudiker
+          groups: wheel
+        - name: personal
