@@ -5,6 +5,7 @@
 
   vars_files:
     - ../vars/gpg.yml
+    - ../vars/pass.yml
     - ../vars/synology.yml
 
   vars_prompt:
@@ -20,7 +21,7 @@
           pass: true
           github: true
           gpg: true
-        repo: "fd"
+        repo: "{{ pass_repo }}"
         gpg_email: "{{ gpg_email }}"
         gpg_public_key: "{{ gpg_public_key }}"
         gpg_signing_key: "{{ gpg_signing_key }}"
