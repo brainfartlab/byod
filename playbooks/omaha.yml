@@ -12,7 +12,8 @@
       ansible.builtin.user:
         name: "{{ item.name }}"
         group: "{{ item.groups | default(omit) }}"
-        password: "{{ lookup('community.general.passwordstore', 'Accounts/'~item.name ) }}"
+        password: "{{ lookup('community.general.passwordstore', 'Accounts/'~item.name ) | password_hash('sha512') }}"
+        update_password: always
         state: present
         shell: /bin/zsh
       loop:

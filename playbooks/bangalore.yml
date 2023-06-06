@@ -9,10 +9,11 @@
     - ../vars/synology.yml
 
   vars_prompt:
-    - name: gpg_passphrase
-      prompt: Type your GPG passphrase
-    - name: synology_user
+    - name: passphrase
+      prompt: Type in your GPG passphrase
+    - name: backup_user
       prompt: Choose Synology user
+      private: false
 
   roles:
     - role: brainfartlab.overlord.credentials
@@ -22,11 +23,11 @@
           github: true
           gpg: true
         repo: "{{ pass_repo }}"
-        gpg_email: "{{ gpg_email }}"
-        gpg_public_key: "{{ gpg_public_key }}"
-        gpg_signing_key: "{{ gpg_signing_key }}"
-        gpg_ownertrust: "{{ gpg_ownertrust }}"
-        gpg_passphrase: "{{ gpg_passphrase }}"
+        gpg_email: "{{ gpg.email }}"
+        gpg_public_key: "{{ gpg.public_key }}"
+        gpg_signing_key: "{{ gpg.signing_key }}"
+        gpg_ownertrust: "{{ gpg.ownertrust }}"
+        gpg_passphrase: "{{ passphrase }}"
     - role: brainfartlab.overlord.terminal
     - role: brainfartlab.overlord.python
     - role: brainfartlab.overlord.node
@@ -34,5 +35,6 @@
     - role: brainfartlab.overlord.rust
     - role: brainfartlab.overlord.synology
       vars:
-        synology_ip: "{{ synology_ip }}"
-        synology_user: "{{ synology_user }}"
+        synology_ip: "{{ synology.ip }}"
+        synology_user: "{{ backup_user }}"
+        not_container: true
