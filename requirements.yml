@@ -3,4 +3,4 @@ collections:
   - name: ansible.posix
     version: 1.5.4
   - name: brainfartlab.overlord
-    version: 1.2.3
+    version: 1.2.6
